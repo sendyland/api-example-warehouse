@@ -14,27 +14,31 @@ const app = express();
 const sessionStore = SequelizeStore(session.Store);
 
 const store = new sessionStore({
-    db: db
+  db: db,
 });
 
-// (async()=>{
-//     await db.sync();
+// (async () => {
+//   await db.sync();
 // })();
 
-app.use(session({
+app.use(
+  session({
     secret: process.env.SESS_SECRET,
     resave: false,
     saveUninitialized: true,
     store: store,
     cookie: {
-        secure: 'auto'
-    }
-}));
+      secure: "auto",
+    },
+  })
+);
 
-app.use(cors({
+app.use(
+  cors({
     credentials: true,
-    origin: 'http://localhost:3000'
-}));
+    origin: "http://localhost:3000",
+  })
+);
 app.use(express.json());
 app.use(UserRoute);
 app.use(ProductRoute);
@@ -42,6 +46,6 @@ app.use(AuthRoute);
 
 // store.sync();
 
-app.listen(process.env.APP_PORT, ()=> {
-    console.log('Server up and running...');
+app.listen(process.env.APP_PORT, () => {
+  console.log("Server up and running...");
 });
